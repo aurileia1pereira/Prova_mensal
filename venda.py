@@ -35,7 +35,6 @@ class Venda:
         for item in self.itens:
             if item.produto == produto:
 
-                # Devolve ao estoque
                 produto.estoque += item.quantidade
 
                 self.itens.remove(item)
