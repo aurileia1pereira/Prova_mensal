@@ -1,5 +1,11 @@
 from produto import Produto
 from venda import Venda
+from pagamento import (
+    PagamentoDebito,
+    PagamentoPix,
+    PagamentoDinheiro,
+    PagamentoCartao
+)
 
 arroz = Produto("Arroz", 6.50, 10)
 
@@ -57,3 +63,30 @@ print(f"R$ {venda.calcular_total():.2f}")
 print("\nEstoque após remover o arroz:")
 
 print(f"Arroz: {arroz.estoque}")
+
+print("\nPAGAMENTO NO DÉBITO")
+
+valor = venda.finalizar_venda(PagamentoDebito)
+
+print(f"Valor final: R$ {valor:.2f}")
+
+
+print("\nPAGAMENTO NO PIX")
+
+valor = venda.finalizar_venda(PagamentoPix)
+
+print(f"Valor final: R$ {valor:.2f}")
+
+
+print("\nPAGAMENTO EM DINHEIRO")
+
+valor = venda.finalizar_venda(PagamentoDinheiro)
+
+print(f"Valor final: R$ {valor:.2f}")
+
+
+print("\nPAGAMENTO NO CARTÃO")
+
+valor = venda.finalizar_venda(PagamentoCartao)
+
+print(f"Valor final: R$ {valor:.2f}")
