@@ -1,21 +1,29 @@
-
 from datetime import datetime
 from item_venda import ItemVenda
 
 
 class Venda:
     def __init__(self):
-        self.data = datetime.now()
-        self.valor_total = 0.0
-        self.itens = []
+        self._data = datetime.now()
+        self._valor_total = 0.0
+        self._itens = []
+        self._pagamento = None
+
+    @property
+    def itens(self):
+        return self._itens
+
+    @property
+    def valor_total(self):
+        return self._valor_total
 
     def calcular_total(self):
-        self.valor_total = 0.0
+        self._valor_total = 0.0
 
         for item in self.itens:
-            self.valor_total += item.calcular_subtotal()
+            self._valor_total += item.calcular_subtotal()
 
-        return self.valor_total
+        return self._valor_total
 
     def adicionar_item(self, produto, quant):
         if quant <= 0:
@@ -25,7 +33,7 @@ class Venda:
             return False
 
         item = ItemVenda(produto, quant)
-        self.itens.append(item)
+        self._itens.append(item)
 
         self.calcular_total()
 
@@ -34,12 +42,19 @@ class Venda:
     def remover_item(self, produto):
         for item in self.itens:
             if item.produto == produto:
-
                 produto.estoque += item.quantidade
 
-                self.itens.remove(item)
+                self._itens.remove(item)
                 self.calcular_total()
 
                 return True
 
         return False
+
+    def finalizar_venda(self, pagamento):
+        if not self.itens:
+            return False
+
+        self._pagamento = pagamento(self.calcular_total())
+
+        return self._pagamento.calcular_valor_final()
