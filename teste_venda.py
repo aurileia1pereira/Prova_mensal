@@ -90,3 +90,5 @@ print("\nPAGAMENTO NO CARTÃO")
 valor = venda.finalizar_venda(PagamentoCartao)
 
 print(f"Valor final: R$ {valor:.2f}")
+print("\nQuantidade de venda criadas:")
+print(Venda.get_total_vendas())
