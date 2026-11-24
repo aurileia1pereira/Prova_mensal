@@ -1,13 +1,19 @@
+
 from datetime import datetime
 from item_venda import ItemVenda
 
 
 class Venda:
+
+    _total_vendas = 0
+
     def __init__(self):
         self._data = datetime.now()
         self._valor_total = 0.0
         self._itens = []
         self._pagamento = None
+
+        Venda._total_vendas += 1
 
     @property
     def itens(self):
@@ -58,3 +64,7 @@ class Venda:
         self._pagamento = pagamento(self.calcular_total())
 
         return self._pagamento.calcular_valor_final()
+
+    @staticmethod
+    def get_total_vendas():
+        return Venda._total_vendas
